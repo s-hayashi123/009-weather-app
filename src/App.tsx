@@ -15,16 +15,12 @@ function App() {
   // TODO: Step 4でここにReact Queryのロジックを実装
   const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
   // APIを叩く非同期関数
-  const fetchWeather = async (city: string) => {
-    try {
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=ja`
-      );
-      const data = res.json();
-      return data;
-    } catch (err) {
-      console.error(err);
-    }
+  const fetchWeather = async (city: string): Promise<WeatherData> => {
+    const res = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=ja`
+    );
+    if (!res.ok) throw new Error("取得にエラーが発生しました");
+    return await res.json();
   };
 
   // TODO: useQuery を使って天気データを取得する
@@ -36,6 +32,7 @@ function App() {
     queryKey: ["weather", searchTerm],
     queryFn: () => fetchWeather(city),
     enabled: !!searchTerm,
+    retry: false,
   });
 
   const handleSearch = (e: React.FormEvent) => {
