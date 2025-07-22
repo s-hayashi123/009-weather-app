@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   const { city } = req.query;
-  const apikey = process.env.OPENWEATHER_API_KEY; // ← Vercelの環境変数名
+  const apikey = process.env.OPENWEATHER_API_KEY;
 
   if (!apikey) {
     res.status(500).json({ error: "APIキーが設定されていません" });
