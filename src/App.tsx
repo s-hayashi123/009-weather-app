@@ -13,7 +13,6 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("tokyo");
 
   // TODO: Step 4でここにReact Queryのロジックを実装
-
   // APIを叩く非同期関数
   const fetchWeather = async (city: string): Promise<WeatherData> => {
     const res = await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
