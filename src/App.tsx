@@ -13,12 +13,10 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("tokyo");
 
   // TODO: Step 4でここにReact Queryのロジックを実装
-  const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
+
   // APIを叩く非同期関数
   const fetchWeather = async (city: string): Promise<WeatherData> => {
-    const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=ja`
-    );
+    const res = await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
     if (!res.ok) throw new Error("取得にエラーが発生しました");
     return await res.json();
   };
